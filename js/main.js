@@ -14,7 +14,16 @@ var DESCRIPTIONS = [
   'Сочно, мощно!',
   'Дубль два',
   'Я поскользнулся и вот...',
-  'Выжал что мог',
+  'Выжал что мог'
+];
+
+var AUTORS = [
+  'Петя',
+  'Вася',
+  'Жеки Чан',
+  'Винишко-тян',
+  'Доминатор3000',
+  'Кекс'
 ];
 
 function getRandomInteger(min, max) {
@@ -32,10 +41,11 @@ function getDescription() {
 
 function generateObject() {
   var object = {
-    url: 'photos/' + getRandomInteger(0, 25) + '.jpg',
+    url: 'photos/' + getRandomInteger(1, 25) + '.jpg',
     description: getDescription(),
     likes: getRandomInteger(15, 200),
-    comments: getComment()
+    comments: getComment(),
+    commentsCount: getRandomInteger(15, 200)
   };
 
   return object;
@@ -65,7 +75,30 @@ var fragment = document.createDocumentFragment();
 
 var pictures = generateArray();
 for (var i = 0; i < pictures.length; i++) {
-  fragment.appendChild(createPicture(pictures[i].url, pictures[i].comments, pictures[i].likes));
+  fragment.appendChild(createPicture(pictures[i].url, pictures[i].description, pictures[i].likes));
 }
 
 userPictureList.appendChild(fragment);
+
+document.querySelector('.big-picture').classList.remove('hidden');
+
+document.querySelector('.big-picture__img').querySelector('img').src = pictures[0].url;
+document.querySelector('.likes-count').textContent = pictures[0].likes;
+document.querySelector('.comments-count').textContent = pictures[0].commentsCount;
+document.querySelector('.social__caption').textContent = pictures[0].description;
+
+var socialPicture = document.querySelectorAll('.social__picture');
+var socialText = document.querySelectorAll('.social__text');
+
+for (var j = 0; j < socialPicture.length; j++) {
+  socialPicture[j].src = 'img/avatar-' + getRandomInteger(1, 6) + '.svg';
+  socialPicture[j].alt = AUTORS[getRandomInteger(1, 6)];
+}
+
+for (var k = 0; k < socialText.length; k++) {
+  socialText[k].textContent = getComment();
+}
+
+document.querySelector('.social__comment-count').classList.add('hidden');
+document.querySelector('.comments-loader').classList.add('hidden');
+document.querySelector('body').classList.add('modal-open');
