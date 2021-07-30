@@ -80,7 +80,7 @@ for (var i = 0; i < pictures.length; i++) {
 
 userPictureList.appendChild(fragment);
 
-document.querySelector('.big-picture').classList.remove('hidden');
+// document.querySelector('.big-picture').classList.remove('hidden');
 
 document.querySelector('.big-picture__img').querySelector('img').src = pictures[0].url;
 document.querySelector('.likes-count').textContent = pictures[0].likes;
@@ -101,4 +101,53 @@ for (var k = 0; k < socialText.length; k++) {
 
 document.querySelector('.social__comment-count').classList.add('hidden');
 document.querySelector('.comments-loader').classList.add('hidden');
-document.querySelector('body').classList.add('modal-open');
+
+
+// Modul 4
+
+
+var openUploadFormButton = document.querySelector('#upload-file');
+var closeUploadFormButton = document.querySelector('#upload-cancel');
+var uploadForm = document.querySelector('.img-upload__overlay');
+var ESC_KEYCODE = 27;
+
+var openUploadForm = function () {
+  uploadForm.classList.remove('hidden');
+  document.addEventListener('keydown', onUploadFormEscPress);
+  modalOpen();
+};
+
+var closeUploadForm = function () {
+  uploadForm.classList.add('hidden');
+  document.removeEventListener('keydown', onUploadFormEscPress);
+  modalClose();
+  openUploadFormButton.value = '';
+};
+
+var onUploadFormEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeUploadForm();
+  }
+};
+
+var modalOpen = function () {
+  document.querySelector('body').classList.add('modal-open');
+};
+
+var modalClose = function () {
+  document.querySelector('body').classList.remove('modal-open');
+};
+
+openUploadFormButton.addEventListener('change', function () {
+  openUploadForm();
+});
+
+closeUploadFormButton.addEventListener('click', function () {
+  closeUploadForm();
+});
+
+var effectLevelPin = document.querySelector('.effect-level__pin');
+
+effectLevelPin.addEventListener('mouseup', function () {
+
+});
