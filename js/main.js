@@ -125,7 +125,7 @@ var closeUploadForm = function () {
 };
 
 var onUploadFormEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && evt.target !== hashTagsInput) {
     closeUploadForm();
   }
 };
@@ -150,4 +150,42 @@ var effectLevelPin = document.querySelector('.effect-level__pin');
 
 effectLevelPin.addEventListener('mouseup', function () {
 
+});
+
+
+// Валидация с хещтегами и комментариями
+var hashTagsInput = document.querySelector('input[name=hashtags]');
+var descriptionInput = document.querySelector('textarea[name=description]');
+var uploadButton = document.querySelector('#upload-submit');
+
+uploadButton.addEventListener('click', function (evt) {
+  if (hashTagsInput.value !== '') {
+    var hashTags = hashTagsInput.value.split(' ');
+    var tagsArr = [];
+
+    hashTags.forEach(function (item) {
+      item = item.toLowerCase();
+
+      if (item.substring(0, 1) !== '#') {
+        hashTagsInput.setCustomValidity('Хэштэг должен начинаться с #');
+      } else if (item === '#') {
+        hashTagsInput.setCustomValidity('Хэштэг не должен быть пустым');
+      } else if (item.length > 20) {
+        hashTagsInput.setCustomValidity('Максимальная длина хэштэга - 20 символов');
+      } else if (tagsArr.indexOf(item) !== -1) {
+        hashTagsInput.setCustomValidity('Хэштэги не должны повторяться');
+      } else {
+        tagsArr.push(item);
+
+        if (tagsArr.length > 5) {
+          hashTagsInput.setCustomValidity('Максимальное количество тегов - 5');
+        } else {
+          hashTagsInput.setCustomValidity('');
+        }
+      }
+
+    });
+  } else {
+    hashTagsInput.setCustomValidity('');
+  }
 });
