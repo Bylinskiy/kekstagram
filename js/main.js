@@ -28,26 +28,17 @@ var AUTORS = [
 
 var photoAmount = 25;
 
-function getRandomInteger(min, max) {
-  var rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
-}
-
-function getComment() {
-  return COMMENTS[getRandomInteger(0, COMMENTS.length - 1)];
-}
-
-function getDescription() {
-  return DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)];
+function getData(data) {
+  return data[window.util.getRandomInteger(0, data.length - 1)];
 }
 
 function generateObject() {
   var object = {
-    url: 'photos/' + getRandomInteger(1, 25) + '.jpg',
-    description: getDescription(),
-    likes: getRandomInteger(15, 200),
-    comments: getComment(),
-    commentsCount: getRandomInteger(15, 200)
+    url: 'photos/' + window.util.getRandomInteger(1, 25) + '.jpg',
+    description: getData(DESCRIPTIONS),
+    likes: window.util.getRandomInteger(15, 200),
+    comments: getData(COMMENTS),
+    commentsCount: window.util.getRandomInteger(15, 200)
   };
 
   return object;
@@ -104,12 +95,12 @@ var renderBigPicture = function (index) {
   var socialText = document.querySelectorAll('.social__text');
 
   for (var j = 0; j < socialPicture.length; j++) {
-    socialPicture[j].src = 'img/avatar-' + getRandomInteger(1, 6) + '.svg';
-    socialPicture[j].alt = AUTORS[getRandomInteger(1, 6)];
+    socialPicture[j].src = 'img/avatar-' + window.util.getRandomInteger(1, 6) + '.svg';
+    socialPicture[j].alt = AUTORS[window.util.getRandomInteger(1, 6)];
   }
 
   for (var k = 0; k < socialText.length; k++) {
-    socialText[k].textContent = getComment();
+    socialText[k].textContent = getData(COMMENTS);
   }
 };
 
@@ -121,7 +112,7 @@ closeBigPictureButton.addEventListener('click', function () {
 });
 
 closeBigPictureButton.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
+  if (evt.keyCode === window.util.ENTER_KEYCODE) {
     closeBigPicture();
   }
 });
@@ -129,17 +120,17 @@ closeBigPictureButton.addEventListener('keydown', function (evt) {
 var openBigPicture = function () {
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onBigPictureEscPress);
-  modalOpen();
+  window.util.modalOpen();
 };
 
 var closeBigPicture = function () {
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', onBigPictureEscPress);
-  modalClose();
+  window.util.modalClose();
 };
 
 var onBigPictureEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === window.util.ESC_KEYCODE) {
     closeBigPicture();
   }
 };
@@ -150,7 +141,7 @@ userPictureList.addEventListener('click', function (evt) {
 });
 
 userPictureList.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
+  if (evt.keyCode === window.util.ENTER_KEYCODE) {
     evt.preventDefault();
     renderBigPicture(onEntrPressPictureChoose(evt));
     openBigPicture();
@@ -161,99 +152,3 @@ document.querySelector('.social__comment-count').classList.add('hidden');
 document.querySelector('.comments-loader').classList.add('hidden');
 
 
-// Modul 4
-
-
-var openUploadFormButton = document.querySelector('#upload-file');
-var closeUploadFormButton = document.querySelector('#upload-cancel');
-var uploadForm = document.querySelector('.img-upload__overlay');
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
-
-var openUploadForm = function () {
-  uploadForm.classList.remove('hidden');
-  document.addEventListener('keydown', onUploadFormEscPress);
-  modalOpen();
-};
-
-var closeUploadForm = function () {
-  uploadForm.classList.add('hidden');
-  document.removeEventListener('keydown', onUploadFormEscPress);
-  modalClose();
-  openUploadFormButton.value = '';
-};
-
-var onUploadFormEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE && evt.target !== hashTagsInput && evt.target !== descriptionInput) {
-    closeUploadForm();
-  }
-};
-
-var modalOpen = function () {
-  document.querySelector('body').classList.add('modal-open');
-};
-
-var modalClose = function () {
-  document.querySelector('body').classList.remove('modal-open');
-};
-
-openUploadFormButton.addEventListener('change', function () {
-  openUploadForm();
-});
-
-closeUploadFormButton.addEventListener('click', function () {
-  closeUploadForm();
-});
-
-var effectLevelPin = document.querySelector('.effect-level__pin');
-
-effectLevelPin.addEventListener('mouseup', function () {
-
-});
-
-
-// Валидация с хещтегами и комментариями
-var hashTagsInput = document.querySelector('input[name=hashtags]');
-var descriptionInput = document.querySelector('textarea[name=description]');
-var uploadButton = document.querySelector('#upload-submit');
-
-uploadButton.addEventListener('click', function () {
-  if (hashTagsInput.value !== '') {
-    var hashTags = hashTagsInput.value.split(' ');
-    var tagsArr = [];
-
-    hashTags.forEach(function (item) {
-      item = item.toLowerCase();
-      var allowedChar = new RegExp('^[а-яА-ЯёЁa-zA-Z0-9]+$');
-
-      if (item.substring(0, 1) !== '#') {
-        hashTagsInput.setCustomValidity('Хэштэг должен начинаться с #');
-      } else if (item === '#') {
-        hashTagsInput.setCustomValidity('Хэштэг не должен быть пустым');
-      } else if (item.length > 20) {
-        hashTagsInput.setCustomValidity('Максимальная длина хэштэга - 20 символов');
-      } else if (tagsArr.indexOf(item) !== -1) {
-        hashTagsInput.setCustomValidity('Хэштэги не должны повторяться');
-      } else if (allowedChar.test(item.substring(1)) === false) {
-        hashTagsInput.setCustomValidity('Хэштег может состоять только из букв и чисел и не может содержать спецсимволы');
-      } else {
-        tagsArr.push(item);
-
-        if (tagsArr.length > 5) {
-          hashTagsInput.setCustomValidity('Максимальное количество тегов - 5');
-        } else {
-          hashTagsInput.setCustomValidity('');
-        }
-      }
-
-    });
-  } else {
-    hashTagsInput.setCustomValidity('');
-  }
-
-  if (descriptionInput.value.length > 140) {
-    descriptionInput.setCustomValidity('Максимальная длина комментария - 140 символов');
-  } else {
-    descriptionInput.setCustomValidity('');
-  }
-});
