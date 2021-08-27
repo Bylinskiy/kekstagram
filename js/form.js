@@ -1,9 +1,11 @@
 'use strict';
 // Использование формы для загрузки изображений
-(function () {
+window.form = (function () {
   var openUploadFormButton = document.querySelector('#upload-file');
   var closeUploadFormButton = document.querySelector('#upload-cancel');
   var uploadForm = document.querySelector('.img-upload__overlay');
+  var hashTagsInput = document.querySelector('input[name=hashtags]');
+  var descriptionInput = document.querySelector('textarea[name=description]');
 
   var openUploadForm = function () {
     uploadForm.classList.remove('hidden');
@@ -37,4 +39,9 @@
   effectLevelPin.addEventListener('mouseup', function () {
 
   });
+
+  return {
+    hashTagsInput: hashTagsInput,
+    descriptionInput: descriptionInput
+  };
 })();

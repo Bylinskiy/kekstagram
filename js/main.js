@@ -1,56 +1,5 @@
 'use strict';
-var COMMENTS = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
-];
 
-var DESCRIPTIONS = [
-  'Я у мамы фотограф',
-  'Ыть как вышло',
-  'Сочно, мощно!',
-  'Дубль два',
-  'Я поскользнулся и вот...',
-  'Выжал что мог'
-];
-
-var AUTORS = [
-  'Петя',
-  'Вася',
-  'Жеки Чан',
-  'Винишко-тян',
-  'Доминатор3000',
-  'Кекс'
-];
-
-var photoAmount = 25;
-
-function getData(data) {
-  return data[window.util.getRandomInteger(0, data.length - 1)];
-}
-
-function generateObject() {
-  var object = {
-    url: 'photos/' + window.util.getRandomInteger(1, 25) + '.jpg',
-    description: getData(DESCRIPTIONS),
-    likes: window.util.getRandomInteger(15, 200),
-    comments: getData(COMMENTS),
-    commentsCount: window.util.getRandomInteger(15, 200)
-  };
-
-  return object;
-}
-
-function generateArray() {
-  var arr = [];
-  for (var i = 0; i < photoAmount; i++) {
-    arr[i] = generateObject();
-  }
-  return arr;
-}
 var userPictureList = document.querySelector('.pictures');
 var userPictureTemplate = document.querySelector('#picture')
   .content
@@ -68,7 +17,7 @@ var createPicture = function (image, comment, likes, index) {
 
 var fragment = document.createDocumentFragment();
 
-var pictures = generateArray();
+var pictures = window.data.generateArray();
 for (var i = 0; i < pictures.length; i++) {
   fragment.appendChild(createPicture(pictures[i].url, pictures[i].description, pictures[i].likes, i));
 }
@@ -96,11 +45,11 @@ var renderBigPicture = function (index) {
 
   for (var j = 0; j < socialPicture.length; j++) {
     socialPicture[j].src = 'img/avatar-' + window.util.getRandomInteger(1, 6) + '.svg';
-    socialPicture[j].alt = AUTORS[window.util.getRandomInteger(1, 6)];
+    socialPicture[j].alt = window.data.AUTORS[window.util.getRandomInteger(1, 6)];
   }
 
   for (var k = 0; k < socialText.length; k++) {
-    socialText[k].textContent = getData(COMMENTS);
+    socialText[k].textContent = window.data.getData(window.data.COMMENTS);
   }
 };
 
