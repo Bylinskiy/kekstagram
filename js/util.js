@@ -26,6 +26,14 @@ window.util = (function () {
     },
     modalClose: function () {
       document.querySelector('body').classList.remove('modal-open');
+    },
+    onClickPictureChoose: function (evt) {
+      var index = evt.target.dataset.index;
+      return index;
+    },
+    onEntrPressPictureChoose: function (evt) {
+      var index = evt.target.children[0].dataset.index;
+      return index;
     }
   };
 })();
