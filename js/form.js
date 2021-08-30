@@ -34,12 +34,6 @@ window.form = (function () {
     closeUploadForm();
   });
 
-  var effectLevelPin = document.querySelector('.effect-level__pin');
-
-  effectLevelPin.addEventListener('mouseup', function () {
-
-  });
-
   return {
     hashTagsInput: hashTagsInput,
     descriptionInput: descriptionInput
