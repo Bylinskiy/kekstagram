@@ -52,8 +52,8 @@
   };
 
   window.gallery.userPictureList.addEventListener('click', function (evt) {
-    if (evt.target.matches('.picture__img')) {
-      renderBigPicture(window.util.onClickPictureChoose(evt));
+    if (evt.target.closest('.picture')) {
+      renderBigPicture(window.util.onPictureChoose(evt));
       openBigPicture();
     }
   });
@@ -61,7 +61,7 @@
   window.gallery.userPictureList.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE && evt.target && evt.target.matches('.picture')) {
       evt.preventDefault();
-      renderBigPicture(window.util.onEntrPressPictureChoose(evt));
+      renderBigPicture(window.util.onPictureChoose(evt));
       openBigPicture();
     }
   });

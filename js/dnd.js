@@ -2,6 +2,12 @@
 // Передвижение пина эффектов
 (function () {
   var pin = document.querySelector('.effect-level__pin');
+  var line = document.querySelector('.effect-level__line');
+  var value = document.querySelector('.effect-level__value');
+  var depth = document.querySelector('.effect-level__depth');
+
+  pin.style.left = 0 + 'px';
+  depth.style.width = 0 + 'px';
 
   pin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -21,8 +27,17 @@
       startCoords = {
         x: moveEvt.clientX,
       };
-
-      pin.style.left = (pin.offsetLeft - shift.x) + 'px';
+      var pinMoves = pin.offsetLeft - shift.x;
+      if (pinMoves < 0) {
+        pin.style.left = 0 + 'px';
+        depth.style.width = 0 + 'px';
+      } else if (pinMoves >= line.offsetWidth) {
+        pin.style.left = line.offsetWidth + 'px';
+        depth.style.width = line.offsetWidth + 'px';
+      } else {
+        pin.style.left = pinMoves + 'px';
+        depth.style.width = pinMoves + 'px';
+      }
     };
 
     var onMouseUp = function (upEvt) {
