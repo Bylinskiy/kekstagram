@@ -1,9 +1,9 @@
 'use strict';
 // Передвижение пина эффектов
 (function () {
-  var effectLevelPin = document.querySelector('.effect-level__pin');
+  var pin = document.querySelector('.effect-level__pin');
 
-  effectLevelPin.addEventListener('mousedown', function (evt) {
+  pin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -22,7 +22,7 @@
         x: moveEvt.clientX,
       };
 
-      effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift.x) + 'px';
+      pin.style.left = (pin.offsetLeft - shift.x) + 'px';
     };
 
     var onMouseUp = function (upEvt) {

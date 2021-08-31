@@ -52,12 +52,14 @@
   };
 
   window.gallery.userPictureList.addEventListener('click', function (evt) {
-    renderBigPicture(window.util.onClickPictureChoose(evt));
-    openBigPicture();
+    if (evt.target.matches('.picture__img')) {
+      renderBigPicture(window.util.onClickPictureChoose(evt));
+      openBigPicture();
+    }
   });
 
   window.gallery.userPictureList.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE && evt.target && evt.target.matches('.picture')) {
       evt.preventDefault();
       renderBigPicture(window.util.onEntrPressPictureChoose(evt));
       openBigPicture();
