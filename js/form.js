@@ -6,6 +6,7 @@ window.form = (function () {
   var uploadForm = document.querySelector('.img-upload__overlay');
   var hashTagsInput = document.querySelector('input[name=hashtags]');
   var descriptionInput = document.querySelector('textarea[name=description]');
+  var imagePreview = document.querySelector('.img-upload__overlay .img-upload__preview');
 
   var openUploadForm = function () {
     uploadForm.classList.remove('hidden');
@@ -36,6 +37,7 @@ window.form = (function () {
 
   return {
     hashTagsInput: hashTagsInput,
-    descriptionInput: descriptionInput
+    descriptionInput: descriptionInput,
+    imagePreview: imagePreview
   };
 })();
