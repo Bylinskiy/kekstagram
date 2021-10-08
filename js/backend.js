@@ -1,5 +1,6 @@
 'use strict';
-(function () {
+window.backend = (function () {
+  var URL = 'https://24.javascript.pages.academy/kekstagram';
   var URL_DATA = 'https://24.javascript.pages.academy/kekstagram/data';
   var TIMEOUT_IN_MS = 10000;
 
@@ -36,5 +37,18 @@
     xhr.send();
   };
 
-  window.backend = {load};
+  var upload = function (data, onLoad, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.open('POST', URL);
+    xhr.timeout = TIMEOUT_IN_MS;
+
+    statusHandler(xhr, onLoad, onError);
+    xhr.send(data);
+  };
+
+  return {
+    load: load,
+    upload: upload
+  };
 })();

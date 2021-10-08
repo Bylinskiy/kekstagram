@@ -1,6 +1,6 @@
 'use strict';
 // Передвижение пина эффектов
-(function () {
+window.effects = (function () {
   var effects = document.querySelector('.effects');
   var pin = document.querySelector('.effect-level__pin');
   var line = document.querySelector('.effect-level__line');
@@ -87,4 +87,10 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  return {
+    pin: pin,
+    depth: depth,
+    effectValue: effectValue
+  };
 })();
